@@ -26,10 +26,10 @@ public class AMTextfield: UIView {
 
         insertSubview(label, aboveSubview: internalTextfield)
 
-        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
+        placeholderTopConstraint = label.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: textFieldVerticalMargin)
         placeholderTopConstraint?.isActive = true
 
-        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+        label.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: internalTextfield.safeAreaLayoutGuide.leftAnchor).isActive = true
 
         return label
     }()
@@ -42,16 +42,16 @@ public class AMTextfield: UIView {
 
         addSubview(textfield)
 
-        textfieldTopConstraint = textfield.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
+        textfieldTopConstraint = textfield.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: textFieldVerticalMargin)
         textfieldTopConstraint?.isActive = true
 
-        textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor)
+        textfieldLeftConstraint = textfield.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor)
         textfieldLeftConstraint?.isActive = true
 
-        textfieldRightConstraint = textfield.rightAnchor.constraint(equalTo: self.rightAnchor)
+        textfieldRightConstraint = textfield.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor)
         textfieldRightConstraint?.isActive = true
 
-        textfield.bottomAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+        textfield.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: infoLabel.safeAreaLayoutGuide.topAnchor).isActive = true
 
         return textfield
     }()
@@ -64,9 +64,9 @@ public class AMTextfield: UIView {
         label.textAlignment = .left
 
         addSubview(label)
-        label.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        label.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor).isActive = true
+        label.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor).isActive = true
+        label.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
 
         infoHeightConstraint = label.heightAnchor.constraint(equalToConstant: textFieldVerticalMargin)
         infoHeightConstraint?.isActive = true
@@ -79,16 +79,16 @@ public class AMTextfield: UIView {
 
         addSubview(view)
 
-        bottomBorderWidthConstraint = view.heightAnchor.constraint(equalToConstant: bottomBorderWidth)
+        bottomBorderWidthConstraint = view.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: bottomBorderWidth)
         bottomBorderWidthConstraint?.isActive = true
 
-        bottomBorderLeftConstraint = view.leftAnchor.constraint(equalTo: self.leftAnchor, constant: bottomBorderPadding.left)
+        bottomBorderLeftConstraint = view.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: bottomBorderPadding.left)
         bottomBorderLeftConstraint?.isActive = true
 
-        bottomBorderRightConstraint = view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: bottomBorderPadding.right)
+        bottomBorderRightConstraint = view.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: bottomBorderPadding.right)
         bottomBorderRightConstraint?.isActive = true
 
-        view.topAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+        view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: internalTextfield.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
         return view
     }()
