@@ -1,6 +1,6 @@
 //
-//  AMTextfield.swift
-//  AMTextfield
+//  AMTextField.swift
+//  AMTextField
 //
 //  Created by Abood Mufti on 2018-07-25.
 //  Copyright © 2018 abood mufti. All rights reserved.
@@ -11,7 +11,7 @@ import UIKit
 
 public typealias HorizontalPadding = (left: CGFloat, right: CGFloat)
 
-public class AMTextfield: UIView {
+public class AMTextField: UIView {
 
     // MARK: Components
 
@@ -223,7 +223,7 @@ public class AMTextfield: UIView {
     }
 }
 
-extension AMTextfield {
+extension AMTextField {
 
 
     public var text: String? {
@@ -328,7 +328,7 @@ extension AMTextfield {
 
 }
 
-extension AMTextfield: UITextInputTraits {
+extension AMTextField: UITextInputTraits {
 
     public var autocapitalizationType: UITextAutocapitalizationType {
         get {

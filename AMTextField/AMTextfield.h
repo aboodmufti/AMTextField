@@ -1,6 +1,6 @@
 //
-//  AMTextfield.h
-//  AMTextfield
+//  AMTextField.h
+//  AMTextField
 //
 //  Created by Abood Mufti on 2018-07-25.
 //  Copyright © 2018 abood mufti. All rights reserved.

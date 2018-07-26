@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		7218E42E21091A0F00367968 /* AMTextfield.h in Headers */ = {isa = PBXBuildFile; fileRef = 7218E42C21091A0F00367968 /* AMTextfield.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7218E43521091A3800367968 /* AMTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7218E43421091A3800367968 /* AMTextfield.swift */; };
+		7218E43521091A3800367968 /* AMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7218E43421091A3800367968 /* AMTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7218E42921091A0F00367968 /* AMTextfield.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AMTextfield.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7218E42921091A0F00367968 /* AMTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AMTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7218E42C21091A0F00367968 /* AMTextfield.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMTextfield.h; sourceTree = "<group>"; };
 		7218E42D21091A0F00367968 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7218E43421091A3800367968 /* AMTextfield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMTextfield.swift; sourceTree = "<group>"; };
+		7218E43421091A3800367968 /* AMTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,7 +32,7 @@
 		7218E41F21091A0F00367968 = {
 			isa = PBXGroup;
 			children = (
-				7218E42B21091A0F00367968 /* AMTextfield */,
+				7218E42B21091A0F00367968 /* AMTextField */,
 				7218E42A21091A0F00367968 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,19 +40,19 @@
 		7218E42A21091A0F00367968 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7218E42921091A0F00367968 /* AMTextfield.framework */,
+				7218E42921091A0F00367968 /* AMTextField.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7218E42B21091A0F00367968 /* AMTextfield */ = {
+		7218E42B21091A0F00367968 /* AMTextField */ = {
 			isa = PBXGroup;
 			children = (
-				7218E43421091A3800367968 /* AMTextfield.swift */,
+				7218E43421091A3800367968 /* AMTextField.swift */,
 				7218E42C21091A0F00367968 /* AMTextfield.h */,
 				7218E42D21091A0F00367968 /* Info.plist */,
 			);
-			path = AMTextfield;
+			path = AMTextField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -69,9 +69,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		7218E42821091A0F00367968 /* AMTextfield */ = {
+		7218E42821091A0F00367968 /* AMTextField */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7218E43121091A0F00367968 /* Build configuration list for PBXNativeTarget "AMTextfield" */;
+			buildConfigurationList = 7218E43121091A0F00367968 /* Build configuration list for PBXNativeTarget "AMTextField" */;
 			buildPhases = (
 				7218E42421091A0F00367968 /* Sources */,
 				7218E42521091A0F00367968 /* Frameworks */,
@@ -82,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = AMTextfield;
+			name = AMTextField;
 			productName = AMTextfield;
-			productReference = 7218E42921091A0F00367968 /* AMTextfield.framework */;
+			productReference = 7218E42921091A0F00367968 /* AMTextField.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7218E42321091A0F00367968 /* Build configuration list for PBXProject "AMTextfield" */;
+			buildConfigurationList = 7218E42321091A0F00367968 /* Build configuration list for PBXProject "AMTextField" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -114,7 +114,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7218E42821091A0F00367968 /* AMTextfield */,
+				7218E42821091A0F00367968 /* AMTextField */,
 			);
 		};
 /* End PBXProject section */
@@ -134,7 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7218E43521091A3800367968 /* AMTextfield.swift in Sources */,
+				7218E43521091A3800367968 /* AMTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +280,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.aboodmufti.AMTextfield;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aboodmufti.AMTextField;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -308,7 +308,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.aboodmufti.AMTextfield;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aboodmufti.AMTextField;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -319,7 +319,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7218E42321091A0F00367968 /* Build configuration list for PBXProject "AMTextfield" */ = {
+		7218E42321091A0F00367968 /* Build configuration list for PBXProject "AMTextField" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7218E42F21091A0F00367968 /* Debug */,
@@ -328,7 +328,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7218E43121091A0F00367968 /* Build configuration list for PBXNativeTarget "AMTextfield" */ = {
+		7218E43121091A0F00367968 /* Build configuration list for PBXNativeTarget "AMTextField" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7218E43221091A0F00367968 /* Debug */,

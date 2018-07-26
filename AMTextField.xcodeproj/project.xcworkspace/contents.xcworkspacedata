@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:AMTextfield.xcodeproj">
+      location = "self:/Users/amufti/Desktop/AMTextfield/AMTextField.xcodeproj">
    </FileRef>
 </Workspace>
