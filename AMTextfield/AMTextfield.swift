@@ -21,15 +21,16 @@ public class AMTextfield: UIView {
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(placeholderLabelTapped)))
 
         insertSubview(label, aboveSubview: internalTextfield)
 
-        placeholderTopConstraint = label.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: textFieldVerticalMargin)
+        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
         placeholderTopConstraint?.isActive = true
 
-        label.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: internalTextfield.safeAreaLayoutGuide.leftAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
 
         return label
     }()
@@ -39,19 +40,20 @@ public class AMTextfield: UIView {
 
         textfield.addTarget(self, action: #selector(textfieldEditingDidBegin), for: .editingDidBegin)
         textfield.addTarget(self, action: #selector(textfieldEditingDidEnd), for: .editingDidEnd)
+        textfield.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(textfield)
 
-        textfieldTopConstraint = textfield.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: textFieldVerticalMargin)
+        textfieldTopConstraint = textfield.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
         textfieldTopConstraint?.isActive = true
 
-        textfieldLeftConstraint = textfield.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor)
+        textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
-        textfieldRightConstraint = textfield.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor)
+        textfieldRightConstraint = textfield.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
         textfieldRightConstraint?.isActive = true
 
-        textfield.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: infoLabel.safeAreaLayoutGuide.topAnchor).isActive = true
+        textfield.bottomAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
 
         return textfield
     }()
@@ -62,11 +64,12 @@ public class AMTextfield: UIView {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(label)
-        label.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor).isActive = true
-        label.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor).isActive = true
-        label.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         infoHeightConstraint = label.heightAnchor.constraint(equalToConstant: textFieldVerticalMargin)
         infoHeightConstraint?.isActive = true
@@ -76,19 +79,20 @@ public class AMTextfield: UIView {
 
     private lazy var bottomBorder: UIView = {
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(view)
 
-        bottomBorderWidthConstraint = view.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: bottomBorderWidth)
+        bottomBorderWidthConstraint = view.heightAnchor.constraint(equalToConstant: bottomBorderWidth)
         bottomBorderWidthConstraint?.isActive = true
 
-        bottomBorderLeftConstraint = view.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: bottomBorderPadding.left)
+        bottomBorderLeftConstraint = view.leftAnchor.constraint(equalTo: self.leftAnchor, constant: bottomBorderPadding.left)
         bottomBorderLeftConstraint?.isActive = true
 
-        bottomBorderRightConstraint = view.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: bottomBorderPadding.right)
+        bottomBorderRightConstraint = view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -bottomBorderPadding.right)
         bottomBorderRightConstraint?.isActive = true
 
-        view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: internalTextfield.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
 
         return view
     }()
@@ -120,6 +124,7 @@ public class AMTextfield: UIView {
     }
 
     private func setup() {
+        translatesAutoresizingMaskIntoConstraints = false
         _ = placeholderLabel
         _ = bottomBorder
     }
@@ -143,7 +148,7 @@ public class AMTextfield: UIView {
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [.curveEaseOut], animations: {
                 self.placeholderLabel.transform = self.placeholderLabel.transform
                     .scaledBy(x: self.placeHolderSmallScale, y: self.placeHolderSmallScale)
-                    .translatedBy(x: 0, y: -(self.textFieldVerticalMargin + 5))
+                    .translatedBy(x: 0, y: -(self.textFieldVerticalMargin + 10))
             })
         }
 
@@ -183,7 +188,7 @@ public class AMTextfield: UIView {
     public var bottomBorderPadding: HorizontalPadding = (0,0) {
         didSet {
             bottomBorderLeftConstraint?.constant = bottomBorderPadding.left
-            bottomBorderRightConstraint?.constant = bottomBorderPadding.right
+            bottomBorderRightConstraint?.constant = -bottomBorderPadding.right
         }
     }
 
@@ -213,7 +218,7 @@ public class AMTextfield: UIView {
     public var horizontalPadding: HorizontalPadding = (0,0) {
         didSet {
             textfieldLeftConstraint?.constant = horizontalPadding.left
-            textfieldRightConstraint?.constant = horizontalPadding.right
+            textfieldRightConstraint?.constant = -horizontalPadding.right
         }
     }
 }
