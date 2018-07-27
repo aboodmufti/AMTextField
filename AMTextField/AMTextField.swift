@@ -64,7 +64,7 @@ public class AMTextField: UIView {
         textfieldRightConstraint = textfield.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
         textfieldRightConstraint?.isActive = true
 
-        textfield.bottomAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+
 
         return textfield
     }()
@@ -79,6 +79,8 @@ public class AMTextField: UIView {
         label.font = font.withSize(font.pointSize * placeHolderSmallScale)
 
         addSubview(label)
+
+        internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -139,6 +141,7 @@ public class AMTextField: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         _ = placeholderLabel
         _ = bottomBorder
+        _ = infoLabel
     }
 
     // MARK: Placeholder Animations
