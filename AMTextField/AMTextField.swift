@@ -430,6 +430,3 @@ extension AMTextField: UITextInputTraits {
     }
 
 }
-
-
-
