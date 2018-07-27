@@ -76,9 +76,10 @@ public class AMTextField: UIView {
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = font.withSize(font.pointSize * placeHolderSmallScale)
 
         addSubview(label)
-        label.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
@@ -210,10 +211,22 @@ public class AMTextField: UIView {
         }
     }
 
+
+    // MARK: Info Label
+
+    public var infoTextColor: UIColor? {
+        didSet {
+            infoLabel.textColor = infoTextColor
+        }
+    }
+
+    // MARK: Miscellaneous
+
     public var font: UIFont =  UIFont.systemFont(ofSize: 18) {
         didSet {
             internalTextfield.font = font
             placeholderLabel.font = font
+            infoLabel.font = font.withSize(font.pointSize * placeHolderSmallScale)
             placeholderTopConstraint?.constant = textFieldVerticalMargin
             textfieldTopConstraint?.constant = textFieldVerticalMargin
             infoHeightConstraint?.constant = textFieldVerticalMargin
@@ -236,6 +249,15 @@ public class AMTextField: UIView {
 
 extension AMTextField {
 
+
+    public var infoText: String? {
+        get {
+            return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        set {
+            infoLabel.text = newValue
+        }
+    }
 
     public var text: String? {
         get {
