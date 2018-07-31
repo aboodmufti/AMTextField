@@ -86,20 +86,20 @@ public class AMTextField: UIView {
 //    }()
 
 
-    private lazy var infoIcon: UIImageView = {
-        var imageView = UIImageView()
-        imageView.contentMode = .center
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(imageView)
-
-        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
-
-        return imageView
-    }()
+//    private lazy var infoIcon: UIImageView = {
+//        var imageView = UIImageView()
+//        imageView.contentMode = .center
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        addSubview(imageView)
+//
+//        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+//        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+//        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
+//        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
+//        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
+//
+//        return imageView
+//    }()
 
     private lazy var infoLabel: UILabel = {
         var label = UILabel()
@@ -112,6 +112,7 @@ public class AMTextField: UIView {
 
         addSubview(label)
 
+        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -260,7 +261,7 @@ public class AMTextField: UIView {
 
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
         infoText = text
-        infoIcon.image = icon
+//        infoIcon.image = icon
     }
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
@@ -311,7 +312,7 @@ extension AMTextField {
             return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         set {
-            infoIcon.image = nil
+//            infoIcon.image = nil
             infoLabel.text = newValue
         }
     }
