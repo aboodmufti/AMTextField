@@ -61,12 +61,36 @@ public class AMTextField: UIView {
         textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
-        textfieldRightConstraint = textfield.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
-        textfieldRightConstraint?.isActive = true
-
-
+        textfield.rightAnchor.constraint(equalTo: secureEntryButton.leftAnchor, constant: 5)
 
         return textfield
+    }()
+
+    private lazy var secureEntryButton: UIButton = {
+        var button = UIButton(type: .custom)
+        button.isEnabled = false
+        addSubview(button)
+
+        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+
+        textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
+        textfieldRightConstraint?.isActive = true
+
+        return button
+    }()
+
+
+    private lazy var infoIcon: UIImageView = {
+        var imageView = UIImageView()
+
+        addSubview(imageView)
+
+        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
+
+        return imageView
     }()
 
     private lazy var infoLabel: UILabel = {
@@ -80,9 +104,9 @@ public class AMTextField: UIView {
 
         addSubview(label)
 
-        internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
-        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: infoIcon.rightAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         infoHeightConstraint = label.heightAnchor.constraint(equalToConstant: textFieldVerticalMargin)
@@ -90,6 +114,7 @@ public class AMTextField: UIView {
 
         return label
     }()
+
 
     private lazy var bottomBorder: UIView = {
         let view = UIView()
@@ -221,6 +246,26 @@ public class AMTextField: UIView {
         didSet {
             infoLabel.textColor = infoTextColor
         }
+    }
+
+    // MARK: icons
+
+    public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
+        infoText = text
+        infoIcon.image = icon
+    }
+
+    public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
+        secureEntryButton.isEnabled = true
+        secureEntryButton.setImage(enabled, for: .normal)
+        secureEntryButton.setImage(disabled, for: .selected)
+        secureEntryButton.addTarget(self, action: #selector(toggleSecureEntry), for: .touchUpInside)
+    }
+
+
+    @objc private func toggleSecureEntry() {
+        isSecureTextEntry = secureEntryButton.isSelected
+        secureEntryButton.isSelected = !secureEntryButton.isSelected
     }
 
     // MARK: Miscellaneous
