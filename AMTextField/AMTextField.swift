@@ -61,26 +61,29 @@ public class AMTextField: UIView {
         textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
+        textfieldRightConstraint = textfield.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
+        textfieldRightConstraint?.isActive = true
+
         return textfield
     }()
 
-    private lazy var secureEntryButton: UIButton = {
-        var button = UIButton(type: .custom)
-        button.isEnabled = false
-        button.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(button)
-
-//        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
-//        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
-        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
-        internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
-
-        textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
-        textfieldRightConstraint?.isActive = true
-
-        return button
-    }()
+//    private lazy var secureEntryButton: UIButton = {
+//        var button = UIButton(type: .custom)
+//        button.isEnabled = false
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        addSubview(button)
+//
+////        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
+////        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+//        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
+//        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
+//        internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
+//
+//        textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
+//        textfieldRightConstraint?.isActive = true
+//
+//        return button
+//    }()
 
 
     private lazy var infoIcon: UIImageView = {
@@ -171,7 +174,7 @@ public class AMTextField: UIView {
         _ = placeholderLabel
         _ = bottomBorder
         _ = infoLabel
-        _ = secureEntryButton
+//        _ = secureEntryButton
     }
 
     // MARK: Placeholder Animations
@@ -261,16 +264,16 @@ public class AMTextField: UIView {
     }
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
-        secureEntryButton.isEnabled = true
-        secureEntryButton.setImage(enabled, for: .normal)
-        secureEntryButton.setImage(disabled, for: .selected)
-        secureEntryButton.addTarget(self, action: #selector(toggleSecureEntry), for: .touchUpInside)
+//        secureEntryButton.isEnabled = true
+//        secureEntryButton.setImage(enabled, for: .normal)
+//        secureEntryButton.setImage(disabled, for: .selected)
+//        secureEntryButton.addTarget(self, action: #selector(toggleSecureEntry), for: .touchUpInside)
     }
 
 
     @objc private func toggleSecureEntry() {
-        isSecureTextEntry = secureEntryButton.isSelected
-        secureEntryButton.isSelected = !secureEntryButton.isSelected
+//        isSecureTextEntry = secureEntryButton.isSelected
+//        secureEntryButton.isSelected = !secureEntryButton.isSelected
     }
 
     // MARK: Miscellaneous
