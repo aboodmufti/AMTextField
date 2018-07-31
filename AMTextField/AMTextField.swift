@@ -175,7 +175,7 @@ public class AMTextField: UIView {
         _ = placeholderLabel
         _ = bottomBorder
         _ = infoLabel
-//        _ = secureEntryButton
+        _ = secureEntryButton
     }
 
     // MARK: Placeholder Animations
