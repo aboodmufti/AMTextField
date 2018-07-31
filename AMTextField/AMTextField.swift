@@ -72,6 +72,7 @@ public class AMTextField: UIView {
 
 //        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
 //        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor)
         button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor)
         internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: 5)
 
