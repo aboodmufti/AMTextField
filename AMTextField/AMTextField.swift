@@ -67,6 +67,7 @@ public class AMTextField: UIView {
     private lazy var secureEntryButton: UIButton = {
         var button = UIButton(type: .custom)
         button.isEnabled = false
+        button.translatesAutoresizingMaskIntoConstraints = false
         addSubview(button)
 
 //        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
@@ -83,7 +84,7 @@ public class AMTextField: UIView {
 
     private lazy var infoIcon: UIImageView = {
         var imageView = UIImageView()
-
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
 
         imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
@@ -104,7 +105,6 @@ public class AMTextField: UIView {
         label.font = font.withSize(font.pointSize * placeHolderSmallScale)
 
         addSubview(label)
-
 
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
