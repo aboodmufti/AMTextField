@@ -69,8 +69,9 @@ public class AMTextField: UIView {
         button.isEnabled = false
         addSubview(button)
 
-        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
-        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+//        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
+//        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor)
         internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: 5)
 
         textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
