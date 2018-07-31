@@ -72,7 +72,7 @@ public class AMTextField: UIView {
 
         button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
-//        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
+        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
 //        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
         internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
 
@@ -92,6 +92,7 @@ public class AMTextField: UIView {
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
         infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
+        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
 
         return imageView
     }()
