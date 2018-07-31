@@ -74,10 +74,10 @@ public class AMTextField: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         addSubview(button)
 
-//        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
-//        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
         button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
+//        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
         internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
 
         textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
@@ -93,7 +93,7 @@ public class AMTextField: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
 
-        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+        imageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
 //        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
