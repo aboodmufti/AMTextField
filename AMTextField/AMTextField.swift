@@ -70,11 +70,11 @@ public class AMTextField: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         addSubview(button)
 
-//        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
-//        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
-        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
-        internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: 5).isActive = true
+        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+//        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
+//        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
+        internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
 
         textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
         textfieldRightConstraint?.isActive = true
