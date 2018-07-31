@@ -41,7 +41,8 @@ public class AMTextField: UIView {
         placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
         placeholderTopConstraint?.isActive = true
 
-        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+        placeholderLeftConstraint = label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
+        placeholderLeftConstraint?.isActive = true
 
         return label
     }()
@@ -86,20 +87,22 @@ public class AMTextField: UIView {
     }()
 
 
-//    private lazy var infoIcon: UIImageView = {
-//        var imageView = UIImageView()
-//        imageView.contentMode = .center
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        addSubview(imageView)
-//
-//        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
-//        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
-//        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-//        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
+    private lazy var infoIcon: UIImageView = {
+        var imageView = UIImageView()
+        imageView.contentMode = .center
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(imageView)
+
+        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
 //        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
-//
-//        return imageView
-//    }()
+        imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 1).isActive = true
+
+        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
+
+        return imageView
+    }()
 
     private lazy var infoLabel: UILabel = {
         var label = UILabel()
@@ -147,6 +150,7 @@ public class AMTextField: UIView {
     // MARK: Constraints
 
     private var placeholderTopConstraint: NSLayoutConstraint?
+    private var placeholderLeftConstraint: NSLayoutConstraint?
 
     private var textfieldTopConstraint: NSLayoutConstraint?
     private var textfieldLeftConstraint: NSLayoutConstraint?
@@ -260,19 +264,19 @@ public class AMTextField: UIView {
     // MARK: icons
 
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
-//        infoText = text
-
-        let fullString = NSMutableAttributedString(string: text)
-
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = icon
-
-        let imageString = NSAttributedString(attachment: imageAttachment)
-
-        fullString.insert(imageString, at: 0)
-
-        infoLabel.attributedText = fullString
-//        infoIcon.image = icon
+        infoText = text
+//
+//        let fullString = NSMutableAttributedString(string: text)
+//
+//        let imageAttachment = NSTextAttachment()
+//        imageAttachment.image = icon
+//
+//        let imageString = NSAttributedString(attachment: imageAttachment)
+//
+//        fullString.insert(imageString, at: 0)
+//
+//        infoLabel.attributedText = fullString
+        infoIcon.image = icon
     }
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
@@ -309,6 +313,7 @@ public class AMTextField: UIView {
 
     public var horizontalPadding: HorizontalPadding = (0,0) {
         didSet {
+            placeholderLeftConstraint?.constant = horizontalPadding.left
             textfieldLeftConstraint?.constant = horizontalPadding.left
             textfieldRightConstraint?.constant = -horizontalPadding.right
         }
@@ -323,7 +328,7 @@ extension AMTextField {
             return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         set {
-//            infoIcon.image = nil
+            infoIcon.image = nil
             infoLabel.text = newValue
         }
     }
