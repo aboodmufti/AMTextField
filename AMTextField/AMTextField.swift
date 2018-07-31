@@ -61,8 +61,6 @@ public class AMTextField: UIView {
         textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
-        textfield.rightAnchor.constraint(equalTo: secureEntryButton.leftAnchor, constant: 5)
-
         return textfield
     }()
 
@@ -73,6 +71,7 @@ public class AMTextField: UIView {
 
         button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+        internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: 5)
 
         textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
         textfieldRightConstraint?.isActive = true
@@ -89,6 +88,7 @@ public class AMTextField: UIView {
         imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
+        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
 
         return imageView
     }()
@@ -104,7 +104,7 @@ public class AMTextField: UIView {
 
         addSubview(label)
 
-        label.leftAnchor.constraint(equalTo: infoIcon.rightAnchor).isActive = true
+
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -167,6 +167,7 @@ public class AMTextField: UIView {
         _ = placeholderLabel
         _ = bottomBorder
         _ = infoLabel
+        _ = secureEntryButton
     }
 
     // MARK: Placeholder Animations
@@ -303,6 +304,7 @@ extension AMTextField {
             return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         set {
+            infoIcon.image = nil
             infoLabel.text = newValue
         }
     }
