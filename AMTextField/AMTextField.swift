@@ -216,7 +216,7 @@ public class AMTextField: UIView {
 
     @objc private func movePlaceholderDown() {
         let frame = self.placeholderLabel.frame
-        self.placeholderLabel.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.placeholderLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)
         self.placeholderLabel.frame = frame
         UIView.animate(withDuration: 0.1) { self.placeholderLabel.transform = .identity }
     }
