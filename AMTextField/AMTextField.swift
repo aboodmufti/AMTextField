@@ -86,21 +86,21 @@ public class AMTextField: UIView {
     }()
 
 
-    private lazy var infoIcon: UIImageView = {
-        var imageView = UIImageView()
-        imageView.contentMode = .center
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(imageView)
-
-        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
-        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
-
-        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
-
-        return imageView
-    }()
+//    private lazy var infoIcon: UIImageView = {
+//        var imageView = UIImageView()
+//        imageView.contentMode = .center
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        addSubview(imageView)
+//
+//        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
+//        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+//        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
+//        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
+//
+//        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
+//
+//        return imageView
+//    }()
 
     private lazy var infoLabel: UILabel = {
         var label = UILabel()
@@ -113,34 +113,36 @@ public class AMTextField: UIView {
 
         addSubview(label)
 
+        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         infoHeightConstraint = label.heightAnchor.constraint(equalToConstant: textFieldVerticalMargin)
         infoHeightConstraint?.isActive = true
 
-        return label
-    }()
-
-    private lazy var infoLabelWitoutIcon: UILabel = {
-        var label = UILabel()
-        label.backgroundColor = .clear
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = font.withSize(font.pointSize * placeHolderSmallScale)
-
-        addSubview(label)
-
-        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
-        label.rightAnchor.constraint(equalTo: infoLabel.rightAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
+        internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
 
         return label
     }()
+
+//    private lazy var infoLabelWitoutIcon: UILabel = {
+//        var label = UILabel()
+//        label.backgroundColor = .clear
+//        label.numberOfLines = 0
+//        label.lineBreakMode = .byWordWrapping
+//        label.textAlignment = .left
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.font = font.withSize(font.pointSize * placeHolderSmallScale)
+//
+//        addSubview(label)
+//
+//        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+//        label.rightAnchor.constraint(equalTo: infoLabel.rightAnchor).isActive = true
+//        label.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+//        label.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
+//
+//        return label
+//    }()
 
 
     private lazy var bottomBorder: UIView = {
@@ -196,9 +198,9 @@ public class AMTextField: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         _ = placeholderLabel
         _ = bottomBorder
-        _ = infoIcon
+        _ = infoLabel
         _ = secureEntryButton
-        _ = infoLabelWitoutIcon
+//        _ = infoLabelWitoutIcon
     }
 
     // MARK: Placeholder Animations
@@ -227,12 +229,7 @@ public class AMTextField: UIView {
     }
 
     @objc private func movePlaceholderDown() {
-        UIView.animate(withDuration: 0.1) {
-            self.placeholderLabel.transform = self.placeholderLabel.transform
-                .scaledBy(x: 1/self.placeHolderSmallScale, y: 1/self.placeHolderSmallScale)
-                .translatedBy(x: 0, y: self.textFieldVerticalMargin + 5)
-
-        }
+        UIView.animate(withDuration: 0.1) { self.placeholderLabel.transform = .identity }
     }
 
     @objc private func textfieldEditingDidEnd() {
@@ -286,36 +283,47 @@ public class AMTextField: UIView {
     public var infoTextColor: UIColor? {
         didSet {
             infoLabel.textColor = infoTextColor
-            infoLabelWitoutIcon.textColor = infoTextColor
+//            infoLabelWitoutIcon.textColor = infoTextColor
         }
     }
 
     public var infoText: String? {
-        let text = infoLabel.text ?? infoLabelWitoutIcon.text
-        return text?.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let text = infoLabel.text ?? infoLabelWitoutIcon.text
+        return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     // MARK: icons
 
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
-        guard icon == nil else {
-            infoLabel.text = text
-            infoIcon.image = icon
-            infoLabel.alpha = 1
-            infoIcon.alpha = 1
+        let finalString = NSMutableAttributedString(string: " \(text)")
 
-            infoLabelWitoutIcon.text = nil
-            infoLabelWitoutIcon.alpha = 0
+        let attachment = NSTextAttachment()
+        attachment.image = icon
+//        attachment.bounds =
+
+        let imageAttributedString = NSAttributedString(attachment: attachment)
+        finalString.insert(imageAttributedString, at: 0)
+
+        infoLabel.attributedText = finalString
+
+        guard icon == nil else {
+//            infoLabel.text = text
+//            infoIcon.image = icon
+//            infoLabel.alpha = 1
+//            infoIcon.alpha = 1
+//
+//            infoLabelWitoutIcon.text = nil
+//            infoLabelWitoutIcon.alpha = 0
             return
         }
+//
+//        infoLabel.text = nil
+//        infoIcon.image = nil
+//        infoLabel.alpha = 0
+//        infoIcon.alpha = 0
 
-        infoLabel.text = nil
-        infoIcon.image = nil
-        infoLabel.alpha = 0
-        infoIcon.alpha = 0
-
-        infoLabelWitoutIcon.text = text
-        infoLabelWitoutIcon.alpha = 1
+//        infoLabelWitoutIcon.text = text
+//        infoLabelWitoutIcon.alpha = 1
     }
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
@@ -343,7 +351,7 @@ public class AMTextField: UIView {
             internalTextfield.font = font
             placeholderLabel.font = font
             infoLabel.font = font.withSize(font.pointSize * placeHolderSmallScale)
-            infoLabelWitoutIcon.font = font.withSize(font.pointSize * placeHolderSmallScale)
+//            infoLabelWitoutIcon.font = font.withSize(font.pointSize * placeHolderSmallScale)
             placeholderTopConstraint?.constant = textFieldVerticalMargin
             textfieldTopConstraint?.constant = textFieldVerticalMargin
             infoHeightConstraint?.constant = textFieldVerticalMargin
