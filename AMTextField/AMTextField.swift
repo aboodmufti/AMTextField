@@ -26,6 +26,11 @@ public class AMTextField: UIView {
 
     // MARK: Components
 
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+    }
+
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -38,11 +43,13 @@ public class AMTextField: UIView {
 
         insertSubview(label, aboveSubview: internalTextfield)
 
-        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
-        placeholderTopConstraint?.isActive = true
-
-        placeholderLeftConstraint = label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
-        placeholderLeftConstraint?.isActive = true
+        label.frame = CGRect(x: horizontalPadding.left, y: textFieldVerticalMargin, width: 0, height: 0)
+//
+//        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
+//        placeholderTopConstraint?.isActive = true
+//
+//        placeholderLeftConstraint = label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
+//        placeholderLeftConstraint?.isActive = true
 
         return label
     }()
@@ -352,7 +359,8 @@ public class AMTextField: UIView {
             placeholderLabel.font = font
             infoLabel.font = font.withSize(font.pointSize * placeHolderSmallScale)
 //            infoLabelWitoutIcon.font = font.withSize(font.pointSize * placeHolderSmallScale)
-            placeholderTopConstraint?.constant = textFieldVerticalMargin
+            placeholderLabel.y = textFieldVerticalMargin
+//            placeholderTopConstraint?.constant = textFieldVerticalMargin
             textfieldTopConstraint?.constant = textFieldVerticalMargin
             infoHeightConstraint?.constant = textFieldVerticalMargin
         }
@@ -366,9 +374,49 @@ public class AMTextField: UIView {
 
     public var horizontalPadding: HorizontalPadding = (0,0) {
         didSet {
-            placeholderLeftConstraint?.constant = horizontalPadding.left
+            placeholderLabel.x = horizontalPadding.left
+//            placeholderLeftConstraint?.constant = horizontalPadding.left
             textfieldLeftConstraint?.constant = horizontalPadding.left
             textfieldRightConstraint?.constant = -horizontalPadding.right
+        }
+    }
+}
+
+extension UIView {
+
+    var x: CGFloat {
+        get {
+            return frame.origin.x
+        }
+        set {
+            frame = CGRect(x: x, y: frame.origin.y, width: frame.width, height: frame.height)
+        }
+    }
+
+    var y: CGFloat {
+        get {
+            return frame.origin.y
+        }
+        set {
+            frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
+        }
+    }
+
+    var width: CGFloat {
+        get {
+            return frame.width
+        }
+        set {
+            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: width, height: frame.height)
+        }
+    }
+
+    var height: CGFloat {
+        get {
+            return frame.height
+        }
+        set {
+            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: height)
         }
     }
 }
