@@ -62,9 +62,6 @@ public class AMTextField: UIView {
         textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
-//        textfieldRightConstraint = textfield.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
-//        textfieldRightConstraint?.isActive = true
-
         return textfield
     }()
 
@@ -76,7 +73,10 @@ public class AMTextField: UIView {
 
         button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
-        button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
+
+        secureEntryButtonWidthConstraint = button.widthAnchor.constraint(equalToConstant: 1)
+        secureEntryButtonWidthConstraint?.isActive = true
+
         internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
 
         textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
@@ -95,9 +95,10 @@ public class AMTextField: UIView {
         imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-        imageView.widthAnchor.constraint(lessThanOrEqualToConstant: textFieldVerticalMargin).isActive = true//constraint(equalTo: infoLabel.heightAnchor).isActive = true
-        imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 1).isActive = true
-        
+
+        infoIconWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 1)
+        infoIconWidthConstraint?.isActive = true
+
         infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
 
         return imageView
@@ -114,7 +115,6 @@ public class AMTextField: UIView {
 
         addSubview(label)
 
-//        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -265,14 +265,27 @@ public class AMTextField: UIView {
         }
     }
 
+    public var infoText: String? {
+        return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     // MARK: icons
 
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
-        infoText = text
+        infoLabel.text = text
         infoIcon.image = icon
+        if icon == nil {
+            infoIconWidthConstraint?.constant = 1
+        } else {
+            infoIconWidthConstraint?.constant = textFieldVerticalMargin
+        }
     }
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
+        secureEntryButtonWidthConstraint?.isActive = false
+        secureEntryButtonWidthConstraint = secureEntryButton.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor)
+        secureEntryButtonWidthConstraint?.isActive = true
+        
         secureEntryButton.isEnabled = true
         secureEntryButton.setImage(enabled, for: .normal)
         secureEntryButton.setImage(disabled, for: .selected)
@@ -316,16 +329,6 @@ public class AMTextField: UIView {
 
 extension AMTextField {
 
-
-    public var infoText: String? {
-        get {
-            return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        set {
-            infoIcon.image = nil
-            infoLabel.text = newValue
-        }
-    }
 
     public var text: String? {
         get {
