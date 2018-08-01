@@ -227,7 +227,12 @@ public class AMTextField: UIView {
     }
 
     @objc private func movePlaceholderDown() {
-        UIView.animate(withDuration: 0.1) { self.placeholderLabel.transform = .identity }
+        UIView.animate(withDuration: 0.1) {
+            self.placeholderLabel.transform = self.placeholderLabel.transform
+                .scaledBy(x: 1/self.placeHolderSmallScale, y: 1/self.placeHolderSmallScale)
+                .translatedBy(x: 0, y: self.textFieldVerticalMargin + 5)
+
+        }
     }
 
     @objc private func textfieldEditingDidEnd() {
