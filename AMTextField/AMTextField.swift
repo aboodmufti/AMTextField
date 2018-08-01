@@ -77,7 +77,6 @@ public class AMTextField: UIView {
         button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
         button.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor).isActive = true
-//        button.centerYAnchor.constraint(equalTo: internalTextfield.centerYAnchor).isActive = true
         internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
 
         textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
@@ -93,11 +92,12 @@ public class AMTextField: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
 
-        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
-
+        imageView.widthAnchor.constraint(lessThanOrEqualToConstant: textFieldVerticalMargin).isActive = true//constraint(equalTo: infoLabel.heightAnchor).isActive = true
+        imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 1).isActive = true
+        
         infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
 
         return imageView
@@ -157,6 +157,9 @@ public class AMTextField: UIView {
 
     private var infoHeightConstraint: NSLayoutConstraint?
 
+    private var infoIconWidthConstraint: NSLayoutConstraint?
+    private var secureEntryButtonWidthConstraint: NSLayoutConstraint?
+
     private var bottomBorderWidthConstraint: NSLayoutConstraint?
     private var bottomBorderLeftConstraint: NSLayoutConstraint?
     private var bottomBorderRightConstraint: NSLayoutConstraint?
@@ -211,10 +214,12 @@ public class AMTextField: UIView {
     }
 
     @objc private func textfieldEditingDidEnd() {
+        secureEntryButton.isEnabled = false
         if internalTextfield.text?.isEmpty ?? false { movePlaceholderDown() }
     }
 
     @objc private func textfieldEditingDidBegin() {
+        secureEntryButton.isEnabled = true
         if internalTextfield.text?.isEmpty ?? false { movePlaceholderUp() }
     }
 
@@ -264,17 +269,6 @@ public class AMTextField: UIView {
 
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
         infoText = text
-//
-//        let fullString = NSMutableAttributedString(string: text)
-//
-//        let imageAttachment = NSTextAttachment()
-//        imageAttachment.image = icon
-//
-//        let imageString = NSAttributedString(attachment: imageAttachment)
-//
-//        fullString.insert(imageString, at: 0)
-//
-//        infoLabel.attributedText = fullString
         infoIcon.image = icon
     }
 
@@ -282,6 +276,7 @@ public class AMTextField: UIView {
         secureEntryButton.isEnabled = true
         secureEntryButton.setImage(enabled, for: .normal)
         secureEntryButton.setImage(disabled, for: .selected)
+        secureEntryButton.isSelected = !isSecureTextEntry
         secureEntryButton.addTarget(self, action: #selector(toggleSecureEntry), for: .touchUpInside)
     }
 
