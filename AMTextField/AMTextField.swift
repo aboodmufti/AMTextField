@@ -93,7 +93,7 @@ public class AMTextField: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
 
-        imageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
 //        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
@@ -115,7 +115,7 @@ public class AMTextField: UIView {
 
         addSubview(label)
 
-        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
+//        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
