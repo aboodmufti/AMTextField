@@ -215,11 +215,13 @@ public class AMTextField: UIView {
 
     @objc private func textfieldEditingDidEnd() {
         secureEntryButton.isEnabled = false
+        secureEntryButton.alpha = 0
         if internalTextfield.text?.isEmpty ?? false { movePlaceholderDown() }
     }
 
     @objc private func textfieldEditingDidBegin() {
         secureEntryButton.isEnabled = true
+        secureEntryButton.alpha = 1
         if internalTextfield.text?.isEmpty ?? false { movePlaceholderUp() }
     }
 
@@ -274,10 +276,17 @@ public class AMTextField: UIView {
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
         infoLabel.text = text
         infoIcon.image = icon
+
         if icon == nil {
-            infoIconWidthConstraint?.constant = 1
+            infoIconWidthConstraint?.isActive = false
+            infoIconWidthConstraint = infoIcon.widthAnchor.constraint(equalToConstant: 1)
+            infoIconWidthConstraint?.isActive = true
+//            infoIconWidthConstraint?.constant = 1
         } else {
-            infoIconWidthConstraint?.constant = textFieldVerticalMargin
+            infoIconWidthConstraint?.isActive = false
+            infoIconWidthConstraint = infoIcon.widthAnchor.constraint(equalToConstant: textFieldVerticalMargin)
+            infoIconWidthConstraint?.isActive = true
+//            infoIconWidthConstraint?.constant = textFieldVerticalMargin
         }
     }
 
@@ -285,7 +294,7 @@ public class AMTextField: UIView {
         secureEntryButtonWidthConstraint?.isActive = false
         secureEntryButtonWidthConstraint = secureEntryButton.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor)
         secureEntryButtonWidthConstraint?.isActive = true
-        
+
         secureEntryButton.isEnabled = true
         secureEntryButton.setImage(enabled, for: .normal)
         secureEntryButton.setImage(disabled, for: .selected)
