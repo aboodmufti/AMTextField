@@ -92,7 +92,10 @@ public class AMTextField: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
 
-        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
+        infoIconLeftConstraint = imageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
+        infoIconLeftConstraint?.isActive = true
+
+//        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
 
@@ -157,7 +160,9 @@ public class AMTextField: UIView {
 
     private var infoHeightConstraint: NSLayoutConstraint?
 
+    private var infoIconLeftConstraint: NSLayoutConstraint?
     private var infoIconWidthConstraint: NSLayoutConstraint?
+
     private var secureEntryButtonWidthConstraint: NSLayoutConstraint?
 
     private var bottomBorderWidthConstraint: NSLayoutConstraint?
@@ -278,15 +283,10 @@ public class AMTextField: UIView {
         infoIcon.image = icon
 
         if icon == nil {
-            infoIconWidthConstraint?.isActive = false
-            infoIconWidthConstraint = infoIcon.widthAnchor.constraint(equalToConstant: 1)
-            infoIconWidthConstraint?.isActive = true
-//            infoIconWidthConstraint?.constant = 1
+            infoIconWidthConstraint?.constant = 1
         } else {
-            infoIconWidthConstraint?.isActive = false
-            infoIconWidthConstraint = infoIcon.widthAnchor.constraint(equalToConstant: textFieldVerticalMargin)
-            infoIconWidthConstraint?.isActive = true
-//            infoIconWidthConstraint?.constant = textFieldVerticalMargin
+
+            infoIconWidthConstraint?.constant = textFieldVerticalMargin
         }
     }
 
@@ -331,6 +331,7 @@ public class AMTextField: UIView {
         didSet {
             placeholderLeftConstraint?.constant = horizontalPadding.left
             textfieldLeftConstraint?.constant = horizontalPadding.left
+            infoIconLeftConstraint?.constant = horizontalPadding.left
             textfieldRightConstraint?.constant = -horizontalPadding.right
         }
     }
