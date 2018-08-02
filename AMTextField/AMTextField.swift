@@ -92,11 +92,10 @@ public class AMTextField: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
 
-        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
+        imageView.leftAnchor.constraint(equalTo: bottomBorder.leftAnchor).isActive = true
         imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-        infoIconWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 1)
-        infoIconWidthConstraint?.isActive = true
+        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
 
         infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
 
@@ -156,7 +155,6 @@ public class AMTextField: UIView {
 
     private var infoHeightConstraint: NSLayoutConstraint?
 
-    private var infoIconWidthConstraint: NSLayoutConstraint?
     private var secureEntryButtonWidthConstraint: NSLayoutConstraint?
 
     private var bottomBorderWidthConstraint: NSLayoutConstraint?
@@ -275,12 +273,6 @@ public class AMTextField: UIView {
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
         infoLabel.text = text
         infoIcon.image = icon
-
-        if icon == nil {
-            infoIconWidthConstraint?.constant = 1
-        } else {
-            infoIconWidthConstraint?.constant = textFieldVerticalMargin
-        }
     }
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
