@@ -26,11 +26,6 @@ public class AMTextField: UIView {
 
     // MARK: Components
 
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-
-    }
-
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -43,13 +38,11 @@ public class AMTextField: UIView {
 
         insertSubview(label, aboveSubview: internalTextfield)
 
-        label.frame = CGRect(x: horizontalPadding.left, y: textFieldVerticalMargin, width: 0, height: 0)
-//
-//        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
-//        placeholderTopConstraint?.isActive = true
-//
-//        placeholderLeftConstraint = label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
-//        placeholderLeftConstraint?.isActive = true
+        placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
+        placeholderTopConstraint?.isActive = true
+
+        placeholderLeftConstraint = label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
+        placeholderLeftConstraint?.isActive = true
 
         return label
     }()
@@ -93,21 +86,22 @@ public class AMTextField: UIView {
     }()
 
 
-//    private lazy var infoIcon: UIImageView = {
-//        var imageView = UIImageView()
-//        imageView.contentMode = .center
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        addSubview(imageView)
-//
-//        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
-//        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
-//        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-//        imageView.widthAnchor.constraint(equalTo: infoLabel.heightAnchor).isActive = true
-//
-//        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
-//
-//        return imageView
-//    }()
+    private lazy var infoIcon: UIImageView = {
+        var imageView = UIImageView()
+        imageView.contentMode = .center
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(imageView)
+
+        imageView.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor, constant: -1).isActive = true
+        imageView.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
+        infoIconWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 1)
+        infoIconWidthConstraint?.isActive = true
+
+        infoLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor).isActive = true
+
+        return imageView
+    }()
 
     private lazy var infoLabel: UILabel = {
         var label = UILabel()
@@ -120,7 +114,6 @@ public class AMTextField: UIView {
 
         addSubview(label)
 
-        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
         label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
@@ -131,26 +124,6 @@ public class AMTextField: UIView {
 
         return label
     }()
-
-//    private lazy var infoLabelWitoutIcon: UILabel = {
-//        var label = UILabel()
-//        label.backgroundColor = .clear
-//        label.numberOfLines = 0
-//        label.lineBreakMode = .byWordWrapping
-//        label.textAlignment = .left
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = font.withSize(font.pointSize * placeHolderSmallScale)
-//
-//        addSubview(label)
-//
-//        label.leftAnchor.constraint(equalTo: internalTextfield.leftAnchor).isActive = true
-//        label.rightAnchor.constraint(equalTo: infoLabel.rightAnchor).isActive = true
-//        label.topAnchor.constraint(equalTo: infoLabel.topAnchor).isActive = true
-//        label.bottomAnchor.constraint(equalTo: infoLabel.bottomAnchor).isActive = true
-//
-//        return label
-//    }()
-
 
     private lazy var bottomBorder: UIView = {
         let view = UIView()
@@ -183,6 +156,7 @@ public class AMTextField: UIView {
 
     private var infoHeightConstraint: NSLayoutConstraint?
 
+    private var infoIconWidthConstraint: NSLayoutConstraint?
     private var secureEntryButtonWidthConstraint: NSLayoutConstraint?
 
     private var bottomBorderWidthConstraint: NSLayoutConstraint?
@@ -207,7 +181,6 @@ public class AMTextField: UIView {
         _ = bottomBorder
         _ = infoLabel
         _ = secureEntryButton
-//        _ = infoLabelWitoutIcon
     }
 
     // MARK: Placeholder Animations
@@ -217,19 +190,19 @@ public class AMTextField: UIView {
     private var textFieldVerticalMargin: CGFloat { return placeholderSmallFontSize + 10 }
 
     @objc private func movePlaceholderUp() {
-        let frame = self.placeholderLabel.frame
-        self.placeholderLabel.layer.anchorPoint = CGPoint(x: 0, y: 0)
-        self.placeholderLabel.frame = frame
+        let labelWidth = placeholderLabel.bounds.size.width
 
         UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut], animations: {
-            self.placeholderLabel.transform = self.placeholderLabel.transform
-                .scaledBy(x: 1.1, y: 1.1)
-                .translatedBy(x: 0, y: 5)
+            var transform = CGAffineTransform.identity
+            transform = transform.translatedBy(x: 0, y: 5)
+            transform = transform.scaledBy(x: 1.1, y: 1.1)
+            self.placeholderLabel.transform = transform
         }) { _ in
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [.curveEaseOut], animations: {
-                self.placeholderLabel.transform = self.placeholderLabel.transform
-                    .scaledBy(x: self.placeHolderSmallScale, y: self.placeHolderSmallScale)
-                    .translatedBy(x: 0, y: -(self.textFieldVerticalMargin + 10))
+                var transform = CGAffineTransform.identity
+                transform = transform.translatedBy(x: -(1-self.placeHolderSmallScale) * (labelWidth/2), y: -self.textFieldVerticalMargin)
+                transform = transform.scaledBy(x: self.placeHolderSmallScale, y: self.placeHolderSmallScale)
+                self.placeholderLabel.transform = transform
             })
         }
 
@@ -290,47 +263,24 @@ public class AMTextField: UIView {
     public var infoTextColor: UIColor? {
         didSet {
             infoLabel.textColor = infoTextColor
-//            infoLabelWitoutIcon.textColor = infoTextColor
         }
     }
 
     public var infoText: String? {
-//        let text = infoLabel.text ?? infoLabelWitoutIcon.text
         return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     // MARK: icons
 
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
-        let finalString = NSMutableAttributedString(string: " \(text)")
+        infoLabel.text = text
+        infoIcon.image = icon
 
-        let attachment = NSTextAttachment()
-        attachment.image = icon
-//        attachment.bounds =
-
-        let imageAttributedString = NSAttributedString(attachment: attachment)
-        finalString.insert(imageAttributedString, at: 0)
-
-        infoLabel.attributedText = finalString
-
-        guard icon == nil else {
-//            infoLabel.text = text
-//            infoIcon.image = icon
-//            infoLabel.alpha = 1
-//            infoIcon.alpha = 1
-//
-//            infoLabelWitoutIcon.text = nil
-//            infoLabelWitoutIcon.alpha = 0
-            return
+        if icon == nil {
+            infoIconWidthConstraint?.constant = 1
+        } else {
+            infoIconWidthConstraint?.constant = textFieldVerticalMargin
         }
-//
-//        infoLabel.text = nil
-//        infoIcon.image = nil
-//        infoLabel.alpha = 0
-//        infoIcon.alpha = 0
-
-//        infoLabelWitoutIcon.text = text
-//        infoLabelWitoutIcon.alpha = 1
     }
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
@@ -358,9 +308,7 @@ public class AMTextField: UIView {
             internalTextfield.font = font
             placeholderLabel.font = font
             infoLabel.font = font.withSize(font.pointSize * placeHolderSmallScale)
-//            infoLabelWitoutIcon.font = font.withSize(font.pointSize * placeHolderSmallScale)
-            placeholderLabel.y = textFieldVerticalMargin
-//            placeholderTopConstraint?.constant = textFieldVerticalMargin
+            placeholderTopConstraint?.constant = textFieldVerticalMargin
             textfieldTopConstraint?.constant = textFieldVerticalMargin
             infoHeightConstraint?.constant = textFieldVerticalMargin
         }
@@ -374,49 +322,9 @@ public class AMTextField: UIView {
 
     public var horizontalPadding: HorizontalPadding = (0,0) {
         didSet {
-            placeholderLabel.x = horizontalPadding.left
-//            placeholderLeftConstraint?.constant = horizontalPadding.left
+            placeholderLeftConstraint?.constant = horizontalPadding.left
             textfieldLeftConstraint?.constant = horizontalPadding.left
             textfieldRightConstraint?.constant = -horizontalPadding.right
-        }
-    }
-}
-
-extension UIView {
-
-    var x: CGFloat {
-        get {
-            return frame.origin.x
-        }
-        set {
-            frame = CGRect(x: x, y: frame.origin.y, width: frame.width, height: frame.height)
-        }
-    }
-
-    var y: CGFloat {
-        get {
-            return frame.origin.y
-        }
-        set {
-            frame = CGRect(x: frame.origin.x, y: y, width: frame.width, height: frame.height)
-        }
-    }
-
-    var width: CGFloat {
-        get {
-            return frame.width
-        }
-        set {
-            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: width, height: frame.height)
-        }
-    }
-
-    var height: CGFloat {
-        get {
-            return frame.height
-        }
-        set {
-            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: height)
         }
     }
 }
