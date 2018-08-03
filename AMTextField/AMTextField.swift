@@ -51,7 +51,7 @@ public class AMTextField: UIView {
 
     public lazy var internalTextfield: UITextField = {
         var textfield = UITextField()
-
+        textfield.textAlignment = .left
         textfield.addTarget(self, action: #selector(textfieldEditingDidBegin), for: .editingDidBegin)
         textfield.addTarget(self, action: #selector(textfieldEditingDidEnd), for: .editingDidEnd)
         textfield.translatesAutoresizingMaskIntoConstraints = false
@@ -212,7 +212,7 @@ public class AMTextField: UIView {
     @objc private func movePlaceholderUp() {
         let labelWidth = placeholderLabel.bounds.size.width
         let xTransform = self.internalTextfield.textAlignment == .left ? -(1-self.placeHolderSmallScale) * (labelWidth/2) : 0
-        self.internalTextfield.text = "xT: \(xTransform) | align: \(self.internalTextfield.textAlignment.rawValue)"
+
         UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut], animations: {
             var transform = CGAffineTransform.identity
             transform = transform.translatedBy(x: 0, y: 5)
