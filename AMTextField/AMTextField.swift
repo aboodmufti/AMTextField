@@ -72,6 +72,7 @@ public class AMTextField: UIView {
     }()
 
     private func handleAlignmentChange() {
+        placeholderLabel.textAlignment = internalTextfield.textAlignment
         switch internalTextfield.textAlignment {
         case .left:
             placeholderXConstraint?.isActive = true
