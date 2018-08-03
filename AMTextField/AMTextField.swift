@@ -3,7 +3,7 @@
 //  AMTextField
 //
 //  Created by Abood Mufti on 2018-07-25.
-//  Copyright © 2018 abood mufti.
+//  Copyright © 2018 Abood Mufti.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -49,6 +49,8 @@ public class AMTextField: UIView {
         return label
     }()
 
+    private var textAlignmentObserver: NSKeyValueObservation?
+
     public lazy var internalTextfield: UITextField = {
         var textfield = UITextField()
         textfield.textAlignment = .left
@@ -70,8 +72,6 @@ public class AMTextField: UIView {
 
         return textfield
     }()
-
-    private var textAlignmentObserver: NSKeyValueObservation?
 
     private func handleAlignmentChange() {
         placeholderLabel.textAlignment = internalTextfield.textAlignment
