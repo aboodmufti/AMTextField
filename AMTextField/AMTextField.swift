@@ -211,7 +211,8 @@ public class AMTextField: UIView {
 
     @objc private func movePlaceholderUp() {
         let labelWidth = placeholderLabel.bounds.size.width
-
+        let xTransform = self.internalTextfield.textAlignment == .left ? -(1-self.placeHolderSmallScale) * (labelWidth/2) : 0
+        print("xTransform: \(xTransform) | alignment: \(self.internalTextfield.textAlignment)")
         UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut], animations: {
             var transform = CGAffineTransform.identity
             transform = transform.translatedBy(x: 0, y: 5)
@@ -220,7 +221,6 @@ public class AMTextField: UIView {
         }) { _ in
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [.curveEaseOut], animations: {
                 var transform = CGAffineTransform.identity
-                let xTransform = self.internalTextfield.textAlignment == .left ? -(1-self.placeHolderSmallScale) * (labelWidth/2) : 0
                 transform = transform.translatedBy(x: xTransform, y: -self.textFieldVerticalMargin)
                 transform = transform.scaledBy(x: self.placeHolderSmallScale, y: self.placeHolderSmallScale)
                 self.placeholderLabel.transform = transform
