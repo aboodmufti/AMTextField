@@ -212,7 +212,7 @@ public class AMTextField: UIView {
     @objc private func movePlaceholderUp() {
         let labelWidth = placeholderLabel.bounds.size.width
         let xTransform = self.internalTextfield.textAlignment == .left ? -(1-self.placeHolderSmallScale) * (labelWidth/2) : 0
-        print("xTransform: \(xTransform) | alignment: \(self.internalTextfield.textAlignment)")
+        self.internalTextfield.text = "xT: \(xTransform) | align: \(self.internalTextfield.textAlignment.rawValue)"
         UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut], animations: {
             var transform = CGAffineTransform.identity
             transform = transform.translatedBy(x: 0, y: 5)
