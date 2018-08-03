@@ -3,7 +3,7 @@
 //  AMTextField
 //
 //  Created by Abood Mufti on 2018-07-25.
-//  Copyright © 2018 abood mufti.
+//  Copyright © 2018 Abood Mufti.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ public class AMTextField: UIView {
 
     // MARK: Components
 
-    private lazy var placeholderLabel: UILabel = {
+    internal lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
         label.numberOfLines = 1
@@ -41,6 +41,8 @@ public class AMTextField: UIView {
         placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
         placeholderTopConstraint?.isActive = true
 
+        placeholderXConstraint = label.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+
         placeholderLeftConstraint = label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         placeholderLeftConstraint?.isActive = true
 
@@ -49,7 +51,7 @@ public class AMTextField: UIView {
 
     public lazy var internalTextfield: UITextField = {
         var textfield = UITextField()
-
+        textfield.textAlignment = .left
         textfield.addTarget(self, action: #selector(textfieldEditingDidBegin), for: .editingDidBegin)
         textfield.addTarget(self, action: #selector(textfieldEditingDidEnd), for: .editingDidEnd)
         textfield.translatesAutoresizingMaskIntoConstraints = false
@@ -62,10 +64,14 @@ public class AMTextField: UIView {
         textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
+        textAlignmentObserver = textfield.observe(\.textAlignment, changeHandler: { (textfield, alignmenet) in
+            self.textAlignmentHasChanged()
+        })
+
         return textfield
     }()
 
-    private lazy var secureEntryButton: UIButton = {
+    internal lazy var secureEntryButton: UIButton = {
         var button = UIButton(type: .custom)
         button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -85,8 +91,7 @@ public class AMTextField: UIView {
         return button
     }()
 
-
-    private lazy var infoIcon: UIImageView = {
+    internal lazy var infoIcon: UIImageView = {
         var imageView = UIImageView()
         imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,14 +107,14 @@ public class AMTextField: UIView {
         return imageView
     }()
 
-    private lazy var infoLabel: UILabel = {
+    internal lazy var infoLabel: UILabel = {
         var label = UILabel()
         label.backgroundColor = .clear
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = font.withSize(font.pointSize * placeHolderSmallScale)
+        label.font = font.withSize(font.pointSize * placeholderSmallScale)
 
         addSubview(label)
 
@@ -124,7 +129,7 @@ public class AMTextField: UIView {
         return label
     }()
 
-    private lazy var bottomBorder: UIView = {
+    internal lazy var bottomBorder: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -146,20 +151,21 @@ public class AMTextField: UIView {
 
     // MARK: Constraints
 
-    private var placeholderTopConstraint: NSLayoutConstraint?
-    private var placeholderLeftConstraint: NSLayoutConstraint?
+    internal var placeholderTopConstraint: NSLayoutConstraint?
+    internal var placeholderLeftConstraint: NSLayoutConstraint?
+    internal var placeholderXConstraint: NSLayoutConstraint?
 
-    private var textfieldTopConstraint: NSLayoutConstraint?
-    private var textfieldLeftConstraint: NSLayoutConstraint?
-    private var textfieldRightConstraint: NSLayoutConstraint?
+    internal var textfieldTopConstraint: NSLayoutConstraint?
+    internal var textfieldLeftConstraint: NSLayoutConstraint?
+    internal var textfieldRightConstraint: NSLayoutConstraint?
 
-    private var infoHeightConstraint: NSLayoutConstraint?
+    internal var infoHeightConstraint: NSLayoutConstraint?
 
-    private var secureEntryButtonWidthConstraint: NSLayoutConstraint?
+    internal var secureEntryButtonWidthConstraint: NSLayoutConstraint?
 
-    private var bottomBorderWidthConstraint: NSLayoutConstraint?
-    private var bottomBorderLeftConstraint: NSLayoutConstraint?
-    private var bottomBorderRightConstraint: NSLayoutConstraint?
+    internal var bottomBorderWidthConstraint: NSLayoutConstraint?
+    internal var bottomBorderLeftConstraint: NSLayoutConstraint?
+    internal var bottomBorderRightConstraint: NSLayoutConstraint?
 
     // MARK: Initialization
 
@@ -173,7 +179,7 @@ public class AMTextField: UIView {
         setup()
     }
 
-    private func setup() {
+    internal func setup() {
         translatesAutoresizingMaskIntoConstraints = false
         _ = placeholderLabel
         _ = bottomBorder
@@ -181,51 +187,12 @@ public class AMTextField: UIView {
         _ = secureEntryButton
     }
 
-    // MARK: Placeholder Animations
+    // MARK: Placeholder
 
-    private var placeHolderSmallScale: CGFloat = 0.7
-    private var placeholderSmallFontSize: CGFloat { return font.pointSize * placeHolderSmallScale }
-    private var textFieldVerticalMargin: CGFloat { return placeholderSmallFontSize + 10 }
-
-    @objc private func movePlaceholderUp() {
-        let labelWidth = placeholderLabel.bounds.size.width
-
-        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut], animations: {
-            var transform = CGAffineTransform.identity
-            transform = transform.translatedBy(x: 0, y: 5)
-            transform = transform.scaledBy(x: 1.1, y: 1.1)
-            self.placeholderLabel.transform = transform
-        }) { _ in
-            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [.curveEaseOut], animations: {
-                var transform = CGAffineTransform.identity
-                transform = transform.translatedBy(x: -(1-self.placeHolderSmallScale) * (labelWidth/2), y: -self.textFieldVerticalMargin)
-                transform = transform.scaledBy(x: self.placeHolderSmallScale, y: self.placeHolderSmallScale)
-                self.placeholderLabel.transform = transform
-            })
-        }
-
-    }
-
-    @objc private func movePlaceholderDown() {
-        UIView.animate(withDuration: 0.1) { self.placeholderLabel.transform = .identity }
-    }
-
-    @objc private func textfieldEditingDidEnd() {
-        secureEntryButton.isEnabled = false
-        secureEntryButton.alpha = 0
-        if internalTextfield.text?.isEmpty ?? false { movePlaceholderDown() }
-    }
-
-    @objc private func textfieldEditingDidBegin() {
-        secureEntryButton.isEnabled = true
-        secureEntryButton.alpha = 1
-        if internalTextfield.text?.isEmpty ?? false { movePlaceholderUp() }
-    }
-
-    @objc private func placeholderLabelTapped() {
-        internalTextfield.becomeFirstResponder()
-    }
-
+    internal var placeholderSmallScale: CGFloat = 0.7
+    internal var placeholderSmallFontSize: CGFloat { return font.pointSize * placeholderSmallScale }
+    internal var textFieldVerticalMargin: CGFloat { return placeholderSmallFontSize + 10 }
+    internal var textAlignmentObserver: NSKeyValueObservation?
 
     // MARK: Bottom Border Styling
 
@@ -255,7 +222,6 @@ public class AMTextField: UIView {
         }
     }
 
-
     // MARK: Info Label
 
     public var infoTextColor: UIColor? {
@@ -268,12 +234,14 @@ public class AMTextField: UIView {
         return infoLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    // MARK: icons
 
     public func setInfoText(text: String, withIcon icon: UIImage? = nil) {
         infoLabel.text = text
         infoIcon.image = icon
     }
+
+
+    // MARK: Seure Entry
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
         secureEntryButtonWidthConstraint?.isActive = false
@@ -288,18 +256,18 @@ public class AMTextField: UIView {
     }
 
 
-    @objc private func toggleSecureEntry() {
+    @objc internal func toggleSecureEntry() {
         isSecureTextEntry = secureEntryButton.isSelected
         secureEntryButton.isSelected = !secureEntryButton.isSelected
     }
 
     // MARK: Miscellaneous
 
-    public var font: UIFont =  UIFont.systemFont(ofSize: 18) {
+    public var font: UIFont = UIFont.systemFont(ofSize: 18) {
         didSet {
             internalTextfield.font = font
             placeholderLabel.font = font
-            infoLabel.font = font.withSize(font.pointSize * placeHolderSmallScale)
+            infoLabel.font = font.withSize(font.pointSize * placeholderSmallScale)
             placeholderTopConstraint?.constant = textFieldVerticalMargin
             textfieldTopConstraint?.constant = textFieldVerticalMargin
             infoHeightConstraint?.constant = textFieldVerticalMargin
@@ -321,210 +289,3 @@ public class AMTextField: UIView {
     }
 }
 
-extension AMTextField {
-
-
-    public var text: String? {
-        get {
-            return internalTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        set {
-            internalTextfield.text = newValue
-        }
-    }
-
-    public var textColor: UIColor? {
-        get {
-            return internalTextfield.textColor
-        }
-        set {
-            internalTextfield.textColor = newValue
-        }
-    }
-
-    public var attributedText: NSAttributedString? {
-        get {
-            return internalTextfield.attributedText
-        }
-        set {
-            internalTextfield.attributedText = newValue
-        }
-    }
-
-    public var placeholder: String? {
-        get {
-            return placeholderLabel.text
-        }
-        set {
-            internalTextfield.placeholder = nil
-            placeholderLabel.text = newValue
-        }
-    }
-
-    public var attributedPlaceholder: NSAttributedString? {
-        get {
-            return placeholderLabel.attributedText
-        }
-        set {
-            internalTextfield.placeholder = nil
-            placeholderLabel.attributedText = newValue
-        }
-    }
-
-    public var textAlignment: NSTextAlignment {
-        get {
-            return internalTextfield.textAlignment
-        }
-        set {
-            internalTextfield.textAlignment = newValue
-        }
-    }
-
-    public var clearsOnBeginEditing: Bool {
-        get {
-            return internalTextfield.clearsOnBeginEditing
-        }
-        set {
-            internalTextfield.clearsOnBeginEditing = newValue
-        }
-    }
-
-    public var adjustsFontSizeToFitWidth: Bool {
-        get {
-            return internalTextfield.adjustsFontSizeToFitWidth
-        }
-        set {
-            internalTextfield.adjustsFontSizeToFitWidth = newValue
-        }
-    }
-
-    public var minimumFontSize: CGFloat {
-        get {
-            return internalTextfield.minimumFontSize
-        }
-        set {
-            internalTextfield.minimumFontSize = newValue
-        }
-    }
-
-    public var delegate: UITextFieldDelegate? {
-        get {
-            return internalTextfield.delegate
-        }
-        set {
-            internalTextfield.delegate = newValue
-        }
-    }
-
-    public override var tintColor: UIColor! {
-        didSet {
-            internalTextfield.tintColor = tintColor
-        }
-    }
-
-    public var isEditing: Bool { return internalTextfield.isEditing }
-
-}
-
-extension AMTextField: UITextInputTraits {
-
-    public var autocapitalizationType: UITextAutocapitalizationType {
-        get {
-            return internalTextfield.autocapitalizationType
-        }
-        set {
-            internalTextfield.autocapitalizationType = newValue
-        }
-    }
-
-    public var autocorrectionType: UITextAutocorrectionType {
-        get {
-            return internalTextfield.autocorrectionType
-        }
-        set {
-            internalTextfield.autocorrectionType = newValue
-        }
-    }
-
-    public var spellCheckingType: UITextSpellCheckingType {
-        get {
-            return internalTextfield.spellCheckingType
-        }
-        set {
-            internalTextfield.spellCheckingType = newValue
-        }
-    }
-
-    public var smartQuotesType: UITextSmartQuotesType {
-        get {
-            return internalTextfield.smartQuotesType
-        }
-        set {
-            internalTextfield.smartQuotesType = newValue
-        }
-    }
-
-    public var smartDashesType: UITextSmartDashesType {
-        get {
-            return internalTextfield.smartDashesType
-        }
-        set {
-            internalTextfield.smartDashesType = newValue
-        }
-    }
-
-    public var smartInsertDeleteType: UITextSmartInsertDeleteType {
-        get {
-            return internalTextfield.smartInsertDeleteType
-        }
-        set {
-            internalTextfield.smartInsertDeleteType = newValue
-        }
-    }
-
-    public var keyboardType: UIKeyboardType {
-        get {
-            return internalTextfield.keyboardType
-        }
-        set {
-            internalTextfield.keyboardType = newValue
-        }
-    }
-
-    public var keyboardAppearance: UIKeyboardAppearance {
-        get {
-            return internalTextfield.keyboardAppearance
-        }
-        set {
-            internalTextfield.keyboardAppearance = newValue
-        }
-    }
-
-    public var enablesReturnKeyAutomatically: Bool {
-        get {
-            return internalTextfield.enablesReturnKeyAutomatically
-        }
-        set {
-            internalTextfield.enablesReturnKeyAutomatically = newValue
-        }
-    }
-
-    public var isSecureTextEntry: Bool {
-        get {
-            return internalTextfield.isSecureTextEntry
-        }
-        set {
-            internalTextfield.isSecureTextEntry = newValue
-        }
-    }
-
-    public var textContentType: UITextContentType! {
-        get {
-            return internalTextfield.textContentType
-        }
-        set {
-            internalTextfield.textContentType = newValue
-        }
-    }
-
-}
