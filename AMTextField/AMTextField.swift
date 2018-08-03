@@ -64,12 +64,14 @@ public class AMTextField: UIView {
         textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
-        _ = textfield.observe(\.textAlignment, changeHandler: { (textfield, alignmenet) in
+        textAlignmentObserver = textfield.observe(\.textAlignment, changeHandler: { (textfield, alignmenet) in
             self.handleAlignmentChange()
         })
 
         return textfield
     }()
+
+    private var textAlignmentObserver: NSKeyValueObservation?
 
     private func handleAlignmentChange() {
         placeholderLabel.textAlignment = internalTextfield.textAlignment
