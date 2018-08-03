@@ -67,24 +67,11 @@ public class AMTextField: UIView {
         textfieldLeftConstraint?.isActive = true
 
         textAlignmentObserver = textfield.observe(\.textAlignment, changeHandler: { (textfield, alignmenet) in
-            self.handleAlignmentChange()
+            self.textAlignmentHasChanged()
         })
 
         return textfield
     }()
-
-    private func handleAlignmentChange() {
-        placeholderLabel.textAlignment = internalTextfield.textAlignment
-        switch internalTextfield.textAlignment {
-        case .left:
-            placeholderXConstraint?.isActive = false
-            placeholderLeftConstraint?.isActive = true
-        case .center:
-            placeholderXConstraint?.isActive = true
-            placeholderLeftConstraint?.isActive = false
-        default: break
-        }
-    }
 
     private lazy var secureEntryButton: UIButton = {
         var button = UIButton(type: .custom)
@@ -226,7 +213,6 @@ public class AMTextField: UIView {
                 self.placeholderLabel.transform = transform
             })
         }
-
     }
 
     @objc private func movePlaceholderDown() {
@@ -249,6 +235,18 @@ public class AMTextField: UIView {
         internalTextfield.becomeFirstResponder()
     }
 
+    private func textAlignmentHasChanged() {
+        placeholderLabel.textAlignment = internalTextfield.textAlignment
+        switch internalTextfield.textAlignment {
+        case .left:
+            placeholderXConstraint?.isActive = false
+            placeholderLeftConstraint?.isActive = true
+        case .center:
+            placeholderXConstraint?.isActive = true
+            placeholderLeftConstraint?.isActive = false
+        default: break
+        }
+    }
 
     // MARK: Bottom Border Styling
 
@@ -400,7 +398,7 @@ extension AMTextField {
         }
         set {
             internalTextfield.textAlignment = newValue
-            handleAlignmentChange()
+            textAlignmentHasChanged()
         }
     }
 
