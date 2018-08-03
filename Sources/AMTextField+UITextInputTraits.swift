@@ -14,28 +14,28 @@ extension AMTextField: UITextInputTraits {
 
     public var text: String? {
         get {
-            return internalTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            return internalTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         set {
-            internalTextfield.text = newValue
+            internalTextField.text = newValue
         }
     }
 
     public var textColor: UIColor? {
         get {
-            return internalTextfield.textColor
+            return internalTextField.textColor
         }
         set {
-            internalTextfield.textColor = newValue
+            internalTextField.textColor = newValue
         }
     }
 
     public var attributedText: NSAttributedString? {
         get {
-            return internalTextfield.attributedText
+            return internalTextField.attributedText
         }
         set {
-            internalTextfield.attributedText = newValue
+            internalTextField.attributedText = newValue
         }
     }
 
@@ -44,7 +44,7 @@ extension AMTextField: UITextInputTraits {
             return placeholderLabel.text
         }
         set {
-            internalTextfield.placeholder = nil
+            internalTextField.placeholder = nil
             placeholderLabel.text = newValue
         }
     }
@@ -54,163 +54,163 @@ extension AMTextField: UITextInputTraits {
             return placeholderLabel.attributedText
         }
         set {
-            internalTextfield.placeholder = nil
+            internalTextField.placeholder = nil
             placeholderLabel.attributedText = newValue
         }
     }
 
     public var textAlignment: NSTextAlignment {
         get {
-            return internalTextfield.textAlignment
+            return internalTextField.textAlignment
         }
         set {
-            internalTextfield.textAlignment = newValue
+            internalTextField.textAlignment = newValue
             textAlignmentHasChanged()
         }
     }
 
     public var clearsOnBeginEditing: Bool {
         get {
-            return internalTextfield.clearsOnBeginEditing
+            return internalTextField.clearsOnBeginEditing
         }
         set {
-            internalTextfield.clearsOnBeginEditing = newValue
+            internalTextField.clearsOnBeginEditing = newValue
         }
     }
 
     public var adjustsFontSizeToFitWidth: Bool {
         get {
-            return internalTextfield.adjustsFontSizeToFitWidth
+            return internalTextField.adjustsFontSizeToFitWidth
         }
         set {
-            internalTextfield.adjustsFontSizeToFitWidth = newValue
+            internalTextField.adjustsFontSizeToFitWidth = newValue
         }
     }
 
     public var minimumFontSize: CGFloat {
         get {
-            return internalTextfield.minimumFontSize
+            return internalTextField.minimumFontSize
         }
         set {
-            internalTextfield.minimumFontSize = newValue
+            internalTextField.minimumFontSize = newValue
         }
     }
 
     public var delegate: UITextFieldDelegate? {
         get {
-            return internalTextfield.delegate
+            return internalTextField.delegate
         }
         set {
-            internalTextfield.delegate = newValue
+            internalTextField.delegate = newValue
         }
     }
 
     public override var tintColor: UIColor! {
         didSet {
-            internalTextfield.tintColor = tintColor
+            internalTextField.tintColor = tintColor
         }
     }
 
-    public var isEditing: Bool { return internalTextfield.isEditing }
+    public var isEditing: Bool { return internalTextField.isEditing }
 
     // MARK: UITextInputTraits
 
     public var autocapitalizationType: UITextAutocapitalizationType {
         get {
-            return internalTextfield.autocapitalizationType
+            return internalTextField.autocapitalizationType
         }
         set {
-            internalTextfield.autocapitalizationType = newValue
+            internalTextField.autocapitalizationType = newValue
         }
     }
 
     public var autocorrectionType: UITextAutocorrectionType {
         get {
-            return internalTextfield.autocorrectionType
+            return internalTextField.autocorrectionType
         }
         set {
-            internalTextfield.autocorrectionType = newValue
+            internalTextField.autocorrectionType = newValue
         }
     }
 
     public var spellCheckingType: UITextSpellCheckingType {
         get {
-            return internalTextfield.spellCheckingType
+            return internalTextField.spellCheckingType
         }
         set {
-            internalTextfield.spellCheckingType = newValue
+            internalTextField.spellCheckingType = newValue
         }
     }
 
     public var smartQuotesType: UITextSmartQuotesType {
         get {
-            return internalTextfield.smartQuotesType
+            return internalTextField.smartQuotesType
         }
         set {
-            internalTextfield.smartQuotesType = newValue
+            internalTextField.smartQuotesType = newValue
         }
     }
 
     public var smartDashesType: UITextSmartDashesType {
         get {
-            return internalTextfield.smartDashesType
+            return internalTextField.smartDashesType
         }
         set {
-            internalTextfield.smartDashesType = newValue
+            internalTextField.smartDashesType = newValue
         }
     }
 
     public var smartInsertDeleteType: UITextSmartInsertDeleteType {
         get {
-            return internalTextfield.smartInsertDeleteType
+            return internalTextField.smartInsertDeleteType
         }
         set {
-            internalTextfield.smartInsertDeleteType = newValue
+            internalTextField.smartInsertDeleteType = newValue
         }
     }
 
     public var keyboardType: UIKeyboardType {
         get {
-            return internalTextfield.keyboardType
+            return internalTextField.keyboardType
         }
         set {
-            internalTextfield.keyboardType = newValue
+            internalTextField.keyboardType = newValue
         }
     }
 
     public var keyboardAppearance: UIKeyboardAppearance {
         get {
-            return internalTextfield.keyboardAppearance
+            return internalTextField.keyboardAppearance
         }
         set {
-            internalTextfield.keyboardAppearance = newValue
+            internalTextField.keyboardAppearance = newValue
         }
     }
 
     public var enablesReturnKeyAutomatically: Bool {
         get {
-            return internalTextfield.enablesReturnKeyAutomatically
+            return internalTextField.enablesReturnKeyAutomatically
         }
         set {
-            internalTextfield.enablesReturnKeyAutomatically = newValue
+            internalTextField.enablesReturnKeyAutomatically = newValue
         }
     }
 
     public var isSecureTextEntry: Bool {
         get {
-            return internalTextfield.isSecureTextEntry
+            return internalTextField.isSecureTextEntry
         }
         set {
-            internalTextfield.isSecureTextEntry = newValue
+            internalTextField.isSecureTextEntry = newValue
         }
     }
 
     public var textContentType: UITextContentType! {
         get {
-            return internalTextfield.textContentType
+            return internalTextField.textContentType
         }
         set {
-            internalTextfield.textContentType = newValue
+            internalTextField.textContentType = newValue
         }
     }
 

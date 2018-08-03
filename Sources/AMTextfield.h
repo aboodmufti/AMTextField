@@ -19,12 +19,12 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for AMTextfield.
-FOUNDATION_EXPORT double AMTextfieldVersionNumber;
+//! Project version number for AMTextField.
+FOUNDATION_EXPORT double AMTextFieldVersionNumber;
 
-//! Project version string for AMTextfield.
-FOUNDATION_EXPORT const unsigned char AMTextfieldVersionString[];
+//! Project version string for AMTextField.
+FOUNDATION_EXPORT const unsigned char AMTextFieldVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <AMTextfield/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <AMTextField/PublicHeader.h>
 
 

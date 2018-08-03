@@ -13,7 +13,7 @@ extension AMTextField {
 
     @objc internal func movePlaceholderUp() {
         let labelWidth = placeholderLabel.bounds.size.width
-        let xTransform = self.internalTextfield.textAlignment == .left ? -(1-self.placeholderSmallScale) * (labelWidth/2) : 0
+        let xTransform = self.internalTextField.textAlignment == .left ? -(1-self.placeholderSmallScale) * (labelWidth/2) : 0
 
         UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut], animations: {
             var transform = CGAffineTransform.identity
@@ -34,25 +34,25 @@ extension AMTextField {
         UIView.animate(withDuration: 0.1) { self.placeholderLabel.transform = .identity }
     }
 
-    @objc internal func textfieldEditingDidEnd() {
+    @objc internal func textFieldEditingDidEnd() {
         secureEntryButton.isEnabled = false
         secureEntryButton.alpha = 0
-        if internalTextfield.text?.isEmpty ?? false { movePlaceholderDown() }
+        if internalTextField.text?.isEmpty ?? false { movePlaceholderDown() }
     }
 
-    @objc internal func textfieldEditingDidBegin() {
+    @objc internal func textFieldEditingDidBegin() {
         secureEntryButton.isEnabled = true
         secureEntryButton.alpha = 1
-        if internalTextfield.text?.isEmpty ?? false { movePlaceholderUp() }
+        if internalTextField.text?.isEmpty ?? false { movePlaceholderUp() }
     }
 
     @objc internal func placeholderLabelTapped() {
-        internalTextfield.becomeFirstResponder()
+        internalTextField.becomeFirstResponder()
     }
 
     internal func textAlignmentHasChanged() {
-        placeholderLabel.textAlignment = internalTextfield.textAlignment
-        switch internalTextfield.textAlignment {
+        placeholderLabel.textAlignment = internalTextField.textAlignment
+        switch internalTextField.textAlignment {
         case .left:
             placeholderXConstraint?.isActive = false
             placeholderLeftConstraint?.isActive = true

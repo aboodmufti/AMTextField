@@ -36,7 +36,7 @@ public class AMTextField: UIView {
 
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(placeholderLabelTapped)))
 
-        insertSubview(label, aboveSubview: internalTextfield)
+        insertSubview(label, aboveSubview: internalTextField)
 
         placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
         placeholderTopConstraint?.isActive = true
@@ -49,26 +49,27 @@ public class AMTextField: UIView {
         return label
     }()
 
-    public lazy var internalTextfield: UITextField = {
-        var textfield = UITextField()
-        textfield.textAlignment = .left
-        textfield.addTarget(self, action: #selector(textfieldEditingDidBegin), for: .editingDidBegin)
-        textfield.addTarget(self, action: #selector(textfieldEditingDidEnd), for: .editingDidEnd)
-        textfield.translatesAutoresizingMaskIntoConstraints = false
+    // The actual textField under the hood.
+    public lazy var internalTextField: UITextField = {
+        var textField = UITextField()
+        textField.textAlignment = .left
+        textField.addTarget(self, action: #selector(textFieldEditingDidBegin), for: .editingDidBegin)
+        textField.addTarget(self, action: #selector(textFieldEditingDidEnd), for: .editingDidEnd)
+        textField.translatesAutoresizingMaskIntoConstraints = false
 
-        addSubview(textfield)
+        addSubview(textField)
 
-        textfieldTopConstraint = textfield.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
-        textfieldTopConstraint?.isActive = true
+        textFieldTopConstraint = textField.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
+        textFieldTopConstraint?.isActive = true
 
-        textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
-        textfieldLeftConstraint?.isActive = true
+        textFieldLeftConstraint = textField.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
+        textFieldLeftConstraint?.isActive = true
 
-        textAlignmentObserver = textfield.observe(\.textAlignment, changeHandler: { (textfield, alignmenet) in
+        textAlignmentObserver = textField.observe(\.textAlignment, changeHandler: { (textField, alignmenet) in
             self.textAlignmentHasChanged()
         })
 
-        return textfield
+        return textField
     }()
 
     internal lazy var secureEntryButton: UIButton = {
@@ -77,16 +78,16 @@ public class AMTextField: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         addSubview(button)
 
-        button.topAnchor.constraint(equalTo: internalTextfield.topAnchor).isActive = true
-        button.bottomAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+        button.topAnchor.constraint(equalTo: internalTextField.topAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo: internalTextField.bottomAnchor).isActive = true
 
         secureEntryButtonWidthConstraint = button.widthAnchor.constraint(equalToConstant: 1)
         secureEntryButtonWidthConstraint?.isActive = true
 
-        internalTextfield.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
+        internalTextField.rightAnchor.constraint(equalTo: button.leftAnchor, constant: -5).isActive = true
 
-        textfieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
-        textfieldRightConstraint?.isActive = true
+        textFieldRightConstraint = button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -horizontalPadding.right)
+        textFieldRightConstraint?.isActive = true
 
         return button
     }()
@@ -124,7 +125,7 @@ public class AMTextField: UIView {
         infoHeightConstraint = label.heightAnchor.constraint(equalToConstant: textFieldVerticalMargin)
         infoHeightConstraint?.isActive = true
 
-        internalTextfield.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
+        internalTextField.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
 
         return label
     }()
@@ -144,7 +145,7 @@ public class AMTextField: UIView {
         bottomBorderRightConstraint = view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -bottomBorderPadding.right)
         bottomBorderRightConstraint?.isActive = true
 
-        view.topAnchor.constraint(equalTo: internalTextfield.bottomAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: internalTextField.bottomAnchor).isActive = true
 
         return view
     }()
@@ -155,9 +156,9 @@ public class AMTextField: UIView {
     internal var placeholderLeftConstraint: NSLayoutConstraint?
     internal var placeholderXConstraint: NSLayoutConstraint?
 
-    internal var textfieldTopConstraint: NSLayoutConstraint?
-    internal var textfieldLeftConstraint: NSLayoutConstraint?
-    internal var textfieldRightConstraint: NSLayoutConstraint?
+    internal var textFieldTopConstraint: NSLayoutConstraint?
+    internal var textFieldLeftConstraint: NSLayoutConstraint?
+    internal var textFieldRightConstraint: NSLayoutConstraint?
 
     internal var infoHeightConstraint: NSLayoutConstraint?
 
@@ -245,7 +246,7 @@ public class AMTextField: UIView {
 
     public func setSecureEntryButtonImages(enabled: UIImage, disabled: UIImage) {
         secureEntryButtonWidthConstraint?.isActive = false
-        secureEntryButtonWidthConstraint = secureEntryButton.widthAnchor.constraint(equalTo: internalTextfield.heightAnchor)
+        secureEntryButtonWidthConstraint = secureEntryButton.widthAnchor.constraint(equalTo: internalTextField.heightAnchor)
         secureEntryButtonWidthConstraint?.isActive = true
 
         secureEntryButton.isEnabled = true
@@ -265,16 +266,16 @@ public class AMTextField: UIView {
 
     public var font: UIFont = UIFont.systemFont(ofSize: 18) {
         didSet {
-            internalTextfield.font = font
+            internalTextField.font = font
             placeholderLabel.font = font
             infoLabel.font = font.withSize(font.pointSize * placeholderSmallScale)
             placeholderTopConstraint?.constant = textFieldVerticalMargin
-            textfieldTopConstraint?.constant = textFieldVerticalMargin
+            textFieldTopConstraint?.constant = textFieldVerticalMargin
             infoHeightConstraint?.constant = textFieldVerticalMargin
         }
     }
 
-    /// Returns `true` if the textfield has an actual
+    /// Returns `true` if the textField has an actual
     /// value greater than an empty string; otherwise `false`.
     public var isEmpty: Bool {
         return text?.isEmpty ?? true
@@ -283,8 +284,8 @@ public class AMTextField: UIView {
     public var horizontalPadding: HorizontalPadding = (0,0) {
         didSet {
             placeholderLeftConstraint?.constant = horizontalPadding.left
-            textfieldLeftConstraint?.constant = horizontalPadding.left
-            textfieldRightConstraint?.constant = -horizontalPadding.right
+            textFieldLeftConstraint?.constant = horizontalPadding.left
+            textFieldRightConstraint?.constant = -horizontalPadding.right
         }
     }
 }
