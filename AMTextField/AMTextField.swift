@@ -41,6 +41,8 @@ public class AMTextField: UIView {
         placeholderTopConstraint = label.topAnchor.constraint(equalTo: self.topAnchor, constant: textFieldVerticalMargin)
         placeholderTopConstraint?.isActive = true
 
+        placeholderXConstraint = label.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+
         placeholderLeftConstraint = label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         placeholderLeftConstraint?.isActive = true
 
@@ -62,8 +64,24 @@ public class AMTextField: UIView {
         textfieldLeftConstraint = textfield.leftAnchor.constraint(equalTo: self.leftAnchor, constant: horizontalPadding.left)
         textfieldLeftConstraint?.isActive = true
 
+        _ = textfield.observe(\.textAlignment, changeHandler: { (textfield, alignmenet) in
+            self.handleAlignmentChange()
+        })
+
         return textfield
     }()
+
+    private func handleAlignmentChange() {
+        switch internalTextfield.textAlignment {
+        case .left:
+            placeholderXConstraint?.isActive = true
+            placeholderLeftConstraint?.isActive = false
+        case .center:
+            placeholderXConstraint?.isActive = true
+            placeholderLeftConstraint?.isActive = false
+        default: break
+        }
+    }
 
     private lazy var secureEntryButton: UIButton = {
         var button = UIButton(type: .custom)
@@ -148,6 +166,7 @@ public class AMTextField: UIView {
 
     private var placeholderTopConstraint: NSLayoutConstraint?
     private var placeholderLeftConstraint: NSLayoutConstraint?
+    private var placeholderXConstraint: NSLayoutConstraint?
 
     private var textfieldTopConstraint: NSLayoutConstraint?
     private var textfieldLeftConstraint: NSLayoutConstraint?
@@ -198,7 +217,8 @@ public class AMTextField: UIView {
         }) { _ in
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [.curveEaseOut], animations: {
                 var transform = CGAffineTransform.identity
-                transform = transform.translatedBy(x: -(1-self.placeHolderSmallScale) * (labelWidth/2), y: -self.textFieldVerticalMargin)
+                let xTransform = self.internalTextfield.textAlignment == .left ? -(1-self.placeHolderSmallScale) * (labelWidth/2) : 0
+                transform = transform.translatedBy(x: xTransform, y: -self.textFieldVerticalMargin)
                 transform = transform.scaledBy(x: self.placeHolderSmallScale, y: self.placeHolderSmallScale)
                 self.placeholderLabel.transform = transform
             })
@@ -377,6 +397,7 @@ extension AMTextField {
         }
         set {
             internalTextfield.textAlignment = newValue
+            handleAlignmentChange()
         }
     }
 
