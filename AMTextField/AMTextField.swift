@@ -75,8 +75,8 @@ public class AMTextField: UIView {
         placeholderLabel.textAlignment = internalTextfield.textAlignment
         switch internalTextfield.textAlignment {
         case .left:
-            placeholderXConstraint?.isActive = true
-            placeholderLeftConstraint?.isActive = false
+            placeholderXConstraint?.isActive = false
+            placeholderLeftConstraint?.isActive = true
         case .center:
             placeholderXConstraint?.isActive = true
             placeholderLeftConstraint?.isActive = false
