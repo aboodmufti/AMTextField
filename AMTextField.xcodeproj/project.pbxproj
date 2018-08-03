@@ -36,7 +36,7 @@
 		7218E41F21091A0F00367968 = {
 			isa = PBXGroup;
 			children = (
-				7218E42B21091A0F00367968 /* AMTextField */,
+				7218E42B21091A0F00367968 /* Sources */,
 				7218E42A21091A0F00367968 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,7 +49,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7218E42B21091A0F00367968 /* AMTextField */ = {
+		7218E42B21091A0F00367968 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				7218E43421091A3800367968 /* AMTextField.swift */,
@@ -58,7 +58,7 @@
 				7218E42C21091A0F00367968 /* AMTextfield.h */,
 				7218E42D21091A0F00367968 /* Info.plist */,
 			);
-			path = AMTextField;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
